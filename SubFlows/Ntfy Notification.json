@@ -1,0 +1,51 @@
+{
+  "Name": "Ntfy Notification",
+  "Type": 1,
+  "Revision": 1,
+  "Description": "Sends an ntfy notification when a flow fails.",
+  "Icon": "fas fa-bullhorn:#257575",
+  "Properties": {
+    "Fields": [],
+    "Variables": {}
+  },
+  "Parts": [
+    {
+      "Uid": "9cae90f7-334f-4d72-b5d5-990d290831fe",
+      "Name": "",
+      "ReadOnly": false,
+      "FlowElementUid": "FileFlows.BasicNodes.FlowFailure",
+      "xPos": 210,
+      "yPos": 80,
+      "Label": "",
+      "Inputs": 0,
+      "Outputs": 1,
+      "OutputConnections": [
+        {
+          "Input": 1,
+          "Output": 1,
+          "InputNode": "b9be127a-d144-4055-bb69-59b290df2f64"
+        }
+      ],
+      "Type": 0
+    },
+    {
+      "Uid": "b9be127a-d144-4055-bb69-59b290df2f64",
+      "Name": "",
+      "ReadOnly": false,
+      "FlowElementUid": "111c76e6-64ae-40b2-b553-d508b4e1a054",
+      "xPos": 210,
+      "yPos": 250,
+      "Label": "Ntfy",
+      "Inputs": 1,
+      "Outputs": 1,
+      "Type": 8,
+      "Model": {
+        "URL": "",
+        "Topic": "",
+        "Title": "FileFlows",
+        "Message": "FileFlows - File '{file.FullName}' failed",
+        "Priority": "High"
+      }
+    }
+  ]
+}

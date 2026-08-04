@@ -1,9 +1,11 @@
 /**
+ * Sends an ntfy notification when a file has been successfully processed.
+ *
  * @name Ntfy - Notify File Processed
  * @uid e5d457e7-056e-4ce9-bbc7-48a171738cc2
  * @description Sends an ntfy notification when a file has been successfully processed
  * @author get-fooby
- * @revision 4
+ * @revision 7
  * @minimumVersion 24.09.1.0
  * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.FileProcessed prefix, for example Ntfy.FileProcessed.Topic, Title, Message, or Priority.
  */
@@ -19,7 +21,7 @@ if (!file || !library)
 
 var prefix = 'Ntfy.FileProcessed.';
 var ntfy = new Ntfy(Variables[prefix + 'Url'], Variables[prefix + 'Topic']);
-ntfy.sendMessage(
+return ntfy.sendMessage(
     Variables[prefix + 'Title'] || Variables['Ntfy.Title'] || 'File Processed',
     Variables[prefix + 'Message'] || Variables['Ntfy.Message'] ||
         'File processed ' + file.Name + '\nFrom Library ' + library.Name,

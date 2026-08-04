@@ -7,17 +7,20 @@ JavaScript integration for publishing FileFlows notifications through [ntfy](htt
 - `Scripts/Shared/Ntfy.js`: shared ntfy publishing client
 - `Scripts/Flow/Notifications/Ntfy/Ntfy - Send Notification.js`: configurable flow node
 - `Scripts/System/Notifications/Ntfy/`: file-processing and server-update event scripts
+- `SubFlows/Ntfy Notification.json`: failure subflow that publishes through the ntfy flow node
 
 ## Install in FileFlows
 
 1. In **Configuration > Scripts**, create the shared script first and paste in `Scripts/Shared/Ntfy.js`.
 2. Create the flow script and paste in `Scripts/Flow/Notifications/Ntfy/Ntfy - Send Notification.js`.
 3. Optionally create the system scripts you want from `Scripts/System/Notifications/Ntfy/` and assign them to FileFlows tasks/events.
-4. In **Configuration > Variables**, add at least:
+4. In **Configuration > Variables**, add the required topic:
 
    ```text
    Ntfy.Topic = your-private-topic
    ```
+
+   `Ntfy.Topic` is mandatory. Notifications cannot be published without a destination topic.
 
    The public ntfy service is used by default. To use another server or authentication, add:
 

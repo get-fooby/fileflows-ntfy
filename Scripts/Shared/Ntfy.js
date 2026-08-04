@@ -1,8 +1,10 @@
 /**
+ * Client for publishing notifications to ntfy.
+ *
  * @name Ntfy
  * @uid f0cecb49-645e-4439-a538-9607d8cebe48
  * @author get-fooby
- * @revision 5
+ * @revision 8
  * @minimumVersion 24.09.1.0
  * @description Client for publishing notifications to ntfy
  */
