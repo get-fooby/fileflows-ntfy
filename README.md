@@ -26,8 +26,6 @@ JavaScript integration for publishing FileFlows notifications through [ntfy](htt
    Ntfy.AccessToken = tk_your_token
    ```
 
-   Alternatively, use `Ntfy.Username` and `Ntfy.Password` instead of an access token.
-
 ## Global defaults
 
 Optional global variables include:
@@ -36,19 +34,6 @@ Optional global variables include:
 Ntfy.Title
 Ntfy.Message
 Ntfy.Priority
-Ntfy.Tags
-Ntfy.Markdown
-Ntfy.ClickUrl
-Ntfy.IconUrl
-Ntfy.AttachmentUrl
-Ntfy.Filename
-Ntfy.Actions
-Ntfy.Delay
-Ntfy.Email
-Ntfy.Call
-Ntfy.SequenceId
-Ntfy.Cache
-Ntfy.Firebase
 ```
 
 Non-empty values configured on the flow node override these global defaults.

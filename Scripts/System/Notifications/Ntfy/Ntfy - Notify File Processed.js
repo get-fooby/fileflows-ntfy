@@ -2,10 +2,10 @@
  * @name Ntfy - Notify File Processed
  * @uid e5d457e7-056e-4ce9-bbc7-48a171738cc2
  * @description Sends an ntfy notification when a file has been successfully processed
- * @author FileFlows Community
- * @revision 2
+ * @author get-fooby
+ * @revision 3
  * @minimumVersion 24.09.1.0
- * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.FileProcessed prefix, for example Ntfy.FileProcessed.Topic, Title, Message, Priority, or Tags.
+ * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.FileProcessed prefix, for example Ntfy.FileProcessed.Topic, Title, Message, or Priority.
  */
 
 import { Ntfy } from '../../../Shared/Ntfy';
@@ -14,13 +14,14 @@ var file = Variables.LibraryFile;
 var library = Variables.Library;
 if (!file || !library)
 {
-    Logger.WLog('This script is expected to run with a file event');
-    return;
+    throw new Error('This script is expected to run with a file event');
 }
 
-var ntfy = new Ntfy({}, 'FileProcessed');
-ntfy.sendMessage({}, {
-    title: 'File Processed',
-    message: 'File processed ' + file.Name + '\nFrom Library ' + library.Name,
-    tags: 'heavy_check_mark'
-});
+var prefix = 'Ntfy.FileProcessed.';
+var ntfy = new Ntfy(Variables[prefix + 'ServerUrl'], Variables[prefix + 'Topic']);
+ntfy.sendMessage(
+    Variables[prefix + 'Title'] || Variables['Ntfy.Title'] || 'File Processed',
+    Variables[prefix + 'Message'] || Variables['Ntfy.Message'] ||
+        'File processed ' + file.Name + '\nFrom Library ' + library.Name,
+    Variables[prefix + 'Priority'] || Variables['Ntfy.Priority']
+);

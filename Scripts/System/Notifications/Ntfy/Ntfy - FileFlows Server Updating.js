@@ -2,10 +2,10 @@
  * @name Ntfy - FileFlows Server Updating
  * @uid 0a610fc2-305c-49bd-8be1-846641400060
  * @description Sends an ntfy notification when the FileFlows server is being automatically updated
- * @author FileFlows Community
- * @revision 2
+ * @author get-fooby
+ * @revision 3
  * @minimumVersion 24.09.1.0
- * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.ServerUpdating prefix, for example Ntfy.ServerUpdating.Topic, Title, Message, Priority, or Tags.
+ * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.ServerUpdating prefix, for example Ntfy.ServerUpdating.Topic, Title, Message, or Priority.
  */
 
 import { Ntfy } from '../../../Shared/Ntfy';
@@ -13,13 +13,14 @@ import { Ntfy } from '../../../Shared/Ntfy';
 var version = Variables.Version;
 if (!version)
 {
-    Logger.WLog('This script is expected to run with an update event');
-    return;
+    throw new Error('This script is expected to run with an update event');
 }
 
-var ntfy = new Ntfy({}, 'ServerUpdating');
-ntfy.sendMessage({}, {
-    title: 'FileFlows Updating',
-    message: 'FileFlows Version ' + version + ' is now being automatically installed',
-    tags: 'arrows_counterclockwise'
-});
+var prefix = 'Ntfy.ServerUpdating.';
+var ntfy = new Ntfy(Variables[prefix + 'ServerUrl'], Variables[prefix + 'Topic']);
+ntfy.sendMessage(
+    Variables[prefix + 'Title'] || Variables['Ntfy.Title'] || 'FileFlows Updating',
+    Variables[prefix + 'Message'] || Variables['Ntfy.Message'] ||
+        'FileFlows Version ' + version + ' is now being automatically installed',
+    Variables[prefix + 'Priority'] || Variables['Ntfy.Priority']
+);
