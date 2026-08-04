@@ -5,7 +5,7 @@ import { Ntfy } from 'Shared/Ntfy';
  * @uid 111c76e6-64ae-40b2-b553-d508b4e1a054
  * @description Publishes a notification to ntfy. Empty values inherit from global Ntfy variables.
  * @author FileFlows Community
- * @revision 1
+ * @revision 2
  * @minimumVersion 24.09.1.0
  * @help Configure Ntfy.Topic and optional Ntfy.ServerUrl, Ntfy.AccessToken or Ntfy.Username/Ntfy.Password in FileFlows Variables. Content defaults use Ntfy.Title, Ntfy.Message, Ntfy.Priority, Ntfy.Tags, Ntfy.Markdown, Ntfy.ClickUrl, Ntfy.IconUrl, Ntfy.AttachmentUrl, Ntfy.Filename, Ntfy.Actions, Ntfy.Delay, Ntfy.Email, Ntfy.Call, Ntfy.SequenceId, Ntfy.Cache, and Ntfy.Firebase.
  * @param {string} ServerUrl Optional ntfy server URL override. Defaults to Ntfy.ServerUrl or https://ntfy.sh.
@@ -32,12 +32,12 @@ import { Ntfy } from 'Shared/Ntfy';
 function Script(ServerUrl, Topic, Title, Message, Priority, Tags, Markdown, ClickUrl,
     IconUrl, AttachmentUrl, Filename, Actions, Delay, Email, Call, SequenceId, Cache, Firebase)
 {
-    let ntfy = new Ntfy({
+    var ntfy = new Ntfy({
         serverUrl: ServerUrl,
         topic: Topic
     });
 
-    let sent = ntfy.sendMessage({
+    var sent = ntfy.sendMessage({
         title: Title,
         message: Message,
         priority: Priority,
