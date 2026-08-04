@@ -22,7 +22,7 @@ JavaScript integration for publishing FileFlows notifications through [ntfy](htt
    The public ntfy service is used by default. To use another server or authentication, add:
 
    ```text
-   Ntfy.ServerUrl = https://ntfy.sh
+   Ntfy.Url = https://ntfy.sh
    Ntfy.AccessToken = tk_your_token
    ```
 

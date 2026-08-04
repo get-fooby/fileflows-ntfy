@@ -2,17 +2,28 @@
  * @name Ntfy
  * @uid f0cecb49-645e-4439-a538-9607d8cebe48
  * @author get-fooby
- * @revision 4
+ * @revision 5
  * @minimumVersion 24.09.1.0
  * @description Client for publishing notifications to ntfy
  */
 export class Ntfy
 {
-    constructor(serverUrl, topic)
+    constructor(URL, Topic)
     {
-        this.ServerUrl = serverUrl || Variables['Ntfy.ServerUrl'] || 'https://ntfy.sh';
-        this.Topic = topic || Variables['Ntfy.Topic'];
+        this.URL = URL || Variables['Ntfy.Url'] || 'https://ntfy.sh';
+        this.Topic = Topic || Variables['Ntfy.Topic'];
         this.AccessToken = Variables['Ntfy.AccessToken'];
+
+        if (!this.Topic)
+            MissingVariable('Ntfy.Topic');
+    }
+
+    getUrl()
+    {
+        var url = '' + this.URL;
+        if (url.endsWith('/') === false)
+            url += '/';
+        return url;
     }
 
     sendMessage(title, message, priority)
@@ -40,18 +51,19 @@ export class Ntfy
             data.priority = priorities[('' + priority).toLowerCase()] || parseInt(priority, 10);
         }
 
-        var request = new System.Net.Http.HttpRequestMessage();
-        request.Method = System.Net.Http.HttpMethod.Post;
-        request.RequestUri = new System.Uri(('' + this.ServerUrl).replace(/\/+$/, '') + '/');
-        request.Content = JsonContent(data);
+        if (this.AccessToken)
+            http.DefaultRequestHeaders.Add('Authorization', 'Bearer ' + this.AccessToken);
+
+        var response = http.PostAsync(this.getUrl(), JsonContent(data)).Result;
 
         if (this.AccessToken)
-        {
-            request.Headers.TryAddWithoutValidation('Authorization', 'Bearer ' + this.AccessToken);
-        }
+            http.DefaultRequestHeaders.Remove('Authorization');
 
-        var response = http.SendAsync(request).Result;
-        response.EnsureSuccessStatusCode();
-        return true;
+        if (response.IsSuccessStatusCode)
+            return true;
+
+        var error = response.Content.ReadAsStringAsync().Result;
+        Logger.WLog('Error from ntfy: ' + error);
+        return false;
     }
 }

@@ -3,7 +3,7 @@
  * @uid f5595266-35ae-4fc5-86f3-4fb77fc792b3
  * @description Sends an ntfy notification when a file failed to be processed
  * @author get-fooby
- * @revision 3
+ * @revision 4
  * @minimumVersion 24.09.1.0
  * @help Requires Ntfy.Topic. Event-specific settings use the Ntfy.FileProcessingFailed prefix, for example Ntfy.FileProcessingFailed.Topic, Title, Message, or Priority.
  */
@@ -18,7 +18,7 @@ if (!file || !library)
 }
 
 var prefix = 'Ntfy.FileProcessingFailed.';
-var ntfy = new Ntfy(Variables[prefix + 'ServerUrl'], Variables[prefix + 'Topic']);
+var ntfy = new Ntfy(Variables[prefix + 'Url'], Variables[prefix + 'Topic']);
 ntfy.sendMessage(
     Variables[prefix + 'Title'] || Variables['Ntfy.Title'] || 'File Processing Failed',
     Variables[prefix + 'Message'] || Variables['Ntfy.Message'] ||
